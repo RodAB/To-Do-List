@@ -1,0 +1,50 @@
+import React, {useState, useEffect, useRef } from 'react'
+
+function TodoForm(props) {
+    const [input, setInput] = useState('');
+
+
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        inputRef.current.focus()
+    })
+
+    const handleChange = e =>{
+        setInput(e.target.value);
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        props.onSubmit({
+            //id: 1 +Math.random(),
+            //value: this.state.onSubmit.slice()
+            id: Math.floor(Math.random() * 10000),
+            text: input
+        });
+
+        setInput('');
+    };
+
+    return (
+        
+         <form className='todo-form' onSubmit={handleSubmit}>
+             <input
+             type='text'
+             placeholder='Escriba una tarea'
+             value={input}
+             name='text'
+             className='todo-input'
+             onChange={handleChange}
+             ref={inputRef}
+             />
+             <button className='todo-button'>
+                Agraegar
+             </button>
+         </form>       
+        
+    )
+}
+
+export default TodoForm
